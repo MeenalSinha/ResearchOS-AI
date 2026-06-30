@@ -30,8 +30,8 @@ export function MatchScoreRing({ label, value }: MatchScoreRingProps) {
             strokeDashoffset={offset}
           />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-ink-900">
-          {value}%
+        <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-ink-900">
+          {Math.round(value)}%
         </div>
       </div>
     </div>
