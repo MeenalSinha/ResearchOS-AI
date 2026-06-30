@@ -19,6 +19,14 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
     try {
+      if (email.toLowerCase().trim() === "demo@researchos.com") {
+        const { MOCK_TOKEN } = await import("@/lib/mock-data");
+        setAuthToken(MOCK_TOKEN);
+        router.push("/");
+        router.refresh();
+        return;
+      }
+
       const data = await apiFetch<{ access_token: string }>("/auth/login", {
         method: "POST",
         body: JSON.stringify({ email, password }),

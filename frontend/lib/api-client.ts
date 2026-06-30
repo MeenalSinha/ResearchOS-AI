@@ -9,8 +9,15 @@ function getToken(): string | null {
   return window.localStorage.getItem("researchos_token");
 }
 
+import { isDemoUser, getMockData } from "./mock-data";
+
 export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = getToken();
+
+  if (isDemoUser(token)) {
+    return getMockData(path, options) as Promise<T>;
+  }
+
   const res = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers: {
