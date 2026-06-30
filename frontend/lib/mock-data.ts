@@ -4,6 +4,8 @@ export const isDemoUser = (token: string | null) => {
   return token === MOCK_TOKEN;
 };
 
+let mockRunStartTime = 0;
+
 export const getMockData = async (path: string, options: RequestInit = {}): Promise<any> => {
   // Simulate network delay
   await new Promise(r => setTimeout(r, 500));
@@ -168,9 +170,53 @@ export const getMockData = async (path: string, options: RequestInit = {}): Prom
     return { recommendation: "Focus heavily on Computer Vision labs this cycle.", confidence: 85 };
   }
 
+  if (path === "/pipeline/run-full") {
+    mockRunStartTime = Date.now();
+    return { run_id: "mock_run_123", status: "running" };
+  }
+
+  if (path.startsWith("/pipeline/runs/mock_run_123")) {
+    if (Date.now() - mockRunStartTime < 5000) {
+      return { run_id: "mock_run_123", status: "running", current_step: "scraping", result: null, error: null };
+    }
+    return {
+      run_id: "mock_run_123",
+      status: "completed",
+      current_step: "done",
+      result: { compatibility: { match_percentage: 95 } },
+      error: null
+    };
+  }
+
   // Fallback empty response for other endpoints
   if (options.method === "POST" || options.method === "PUT") {
     return { success: true };
   }
   return [];
+};
+
+export const createMockWebSocket = (onMessage: (event: any) => void) => {
+  let step = 0;
+  const steps = [
+    { agent_name: "DiscoveryAgent", status: "running", message: "Searching for professor publications..." },
+    { agent_name: "DiscoveryAgent", status: "completed", message: "Found 12 recent papers." },
+    { agent_name: "AnalysisAgent", status: "running", message: "Reading abstract for 'ImageNet'..." },
+    { agent_name: "AnalysisAgent", status: "completed", message: "Analyzed key research areas." },
+    { agent_name: "DraftingAgent", status: "running", message: "Drafting personalized email..." },
+    { agent_name: "DraftingAgent", status: "completed", message: "Email drafted successfully." },
+  ];
+
+  const interval = setInterval(() => {
+    if (step < steps.length) {
+      onMessage({ ...steps[step], timestamp: new Date().toISOString() });
+      step++;
+    }
+  }, 800);
+
+  // Send an initial connected message or just start
+  setTimeout(() => onMessage({ agent_name: "System", status: "connected", message: "Live feed connected." }), 100);
+
+  return {
+    close: () => clearInterval(interval)
+  };
 };

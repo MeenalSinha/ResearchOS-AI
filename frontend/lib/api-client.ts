@@ -9,7 +9,7 @@ function getToken(): string | null {
   return window.localStorage.getItem("researchos_token");
 }
 
-import { isDemoUser, getMockData } from "./mock-data";
+import { isDemoUser, getMockData, createMockWebSocket } from "./mock-data";
 
 export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = getToken();
@@ -35,6 +35,11 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
 }
 
 export function openAgentSocket(userId: string, onMessage: (event: any) => void): WebSocket {
+  const token = getToken();
+  if (isDemoUser(token)) {
+    return createMockWebSocket(onMessage) as unknown as WebSocket;
+  }
+
   const wsBase = (process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8000").replace(/\/$/, "");
   const socket = new WebSocket(`${wsBase}/ws/agents/${userId}`);
   socket.onmessage = (msg) => onMessage(JSON.parse(msg.data));
