@@ -8,7 +8,7 @@ from app.api.deps import get_current_user_id
 from app.db.session import get_db
 from app.models.models import EmailMessage, Professor
 
-router = APIRouter(tags=["messages"])
+router = APIRouter(prefix="/messages", tags=["messages"])
 
 @router.get("")
 async def get_messages(user_id: str = Depends(get_current_user_id), db: AsyncSession = Depends(get_db)):
