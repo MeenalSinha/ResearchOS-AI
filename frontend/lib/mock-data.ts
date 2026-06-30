@@ -88,6 +88,71 @@ export const getMockData = async (path: string, options: RequestInit = {}): Prom
     };
   }
 
+  if (path === "/applications") {
+    return [
+      { id: "1", status: "ready", title: "Prof. Antonio Torralba - MIT", approved: false },
+      { id: "2", status: "submitted", title: "Prof. Fei-Fei Li - Stanford", approved: true },
+      { id: "3", status: "under_review", title: "Prof. Martial Hebert - CMU", approved: true },
+    ];
+  }
+
+  if (path === "/messages") {
+    return [
+      {
+        id: "1", application_id: "2", professor_id: "p2", professor_name: "Prof. Fei-Fei Li",
+        professor_image: "/images/prof_fei_fei.png", direction: "inbound",
+        subject: "Re: PhD Application - Computer Vision",
+        body_text: "Thank you for reaching out. I was very impressed by your background. Would you be available for a quick chat next Tuesday?",
+        is_read: false, timestamp: new Date().toISOString()
+      }
+    ];
+  }
+
+  if (path === "/calendar/events") {
+    return [
+      { id: "1", application_id: "2", title: "Interview with Prof. Fei-Fei Li", date: new Date(Date.now() + 86400000 * 2).toISOString(), event_type: "follow_up", status: "scheduled" }
+    ];
+  }
+
+  if (path === "/pipeline/opportunities/scan") {
+    return {
+      source: "Web Search",
+      note: "Scanned MITACS, DAAD, and SURGE listings. Found 2 potential matches for Summer 2027 intake in Computer Vision.",
+      fields: ["Computer Vision", "Robotics"]
+    };
+  }
+
+  if (path === "/interviews") {
+    return [
+      { id: "1", professor_name: "Prof. Fei-Fei Li", date: new Date(Date.now() + 86400000 * 2).toISOString(), status: "scheduled", link: "https://zoom.us/j/123456789" }
+    ];
+  }
+
+  if (path === "/documents") {
+    return [
+      { id: "1", name: "Resume_2026.pdf", type: "resume", uploaded_at: new Date().toISOString() },
+      { id: "2", name: "SOP_Draft_v2.docx", type: "sop", uploaded_at: new Date().toISOString() },
+    ];
+  }
+
+  if (path === "/graph") {
+    return {
+      nodes: [{ id: "n1", label: "Computer Vision" }, { id: "n2", label: "Robotics" }],
+      edges: [{ source: "n1", target: "n2" }]
+    };
+  }
+
+  if (path === "/applications/candidates") {
+    return [
+      { name: "Stanford AI Lab", score: 92 },
+      { name: "MIT CSAIL", score: 95 }
+    ];
+  }
+
+  if (path === "/pipeline/strategy") {
+    return { recommendation: "Focus heavily on Computer Vision labs this cycle.", confidence: 85 };
+  }
+
   // Fallback empty response for other endpoints
   if (options.method === "POST" || options.method === "PUT") {
     return { success: true };
