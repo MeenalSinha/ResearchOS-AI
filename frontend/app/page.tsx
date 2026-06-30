@@ -56,7 +56,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {summary.error && (
+      {userId && summary.error && (
         <div className="mb-6 flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
           <AlertCircle size={16} />
           Could not load your dashboard data: {summary.error}
