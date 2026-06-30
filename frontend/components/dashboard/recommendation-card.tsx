@@ -35,8 +35,8 @@ export function RecommendationCard({ university, professor, field, match, imageS
         </div>
       </div>
       
-      <div className="flex flex-col gap-3 relative z-10 mt-auto">
-        <div className="flex items-center justify-between">
+      <div className={`flex flex-col gap-3 relative z-10 mt-auto ${imageSrc && !isExpanded ? 'pr-[76px]' : ''}`}>
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <span className="inline-block text-[11px] font-bold bg-brand-50 text-brand-600 rounded-md px-2.5 py-1">
             {match}% Match
           </span>
