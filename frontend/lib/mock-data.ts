@@ -137,8 +137,23 @@ export const getMockData = async (path: string, options: RequestInit = {}): Prom
 
   if (path === "/graph") {
     return {
-      nodes: [{ id: "n1", label: "Computer Vision" }, { id: "n2", label: "Robotics" }],
-      edges: [{ source: "n1", target: "n2" }]
+      nodes: [
+        { id: "u1", label: "You", type: "user", color: "#6366f1" },
+        { id: "p1", label: "Prof. Fei-Fei Li", type: "professor", color: "#f43f5e", subtitle: "Stanford" },
+        { id: "p2", label: "Prof. Antonio Torralba", type: "professor", color: "#f43f5e", subtitle: "MIT" },
+        { id: "p3", label: "Prof. Martial Hebert", type: "professor", color: "#f43f5e", subtitle: "CMU" },
+        { id: "paper1", label: "ImageNet", type: "paper", color: "#10b981", subtitle: "2009" },
+        { id: "paper2", label: "Places Database", type: "paper", color: "#10b981", subtitle: "2014" },
+        { id: "paper3", label: "Robotics Vision", type: "paper", color: "#10b981", subtitle: "2018" },
+      ],
+      edges: [
+        { source: "u1", target: "p1", label: "applied", type: "applied" },
+        { source: "u1", target: "p2", label: "applied", type: "applied" },
+        { source: "u1", target: "p3", label: "applied", type: "applied" },
+        { source: "p1", target: "paper1", label: "authored", type: "authored" },
+        { source: "p2", target: "paper2", label: "authored", type: "authored" },
+        { source: "p3", target: "paper3", label: "authored", type: "authored" },
+      ]
     };
   }
 
