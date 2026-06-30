@@ -41,7 +41,7 @@ export const getMockData = async (path: string, options: RequestInit = {}): Prom
         field: "Computer Vision",
         match: 95,
         recommendation: "Highly Recommended",
-        imageSrc: "https://i.pravatar.cc/150?u=torralba",
+        imageSrc: "/images/prof_antonio.png",
       },
       {
         university: "Stanford University",
@@ -49,7 +49,7 @@ export const getMockData = async (path: string, options: RequestInit = {}): Prom
         field: "Computer Science",
         match: 92,
         recommendation: "Strong Match",
-        imageSrc: "https://i.pravatar.cc/150?u=feifei",
+        imageSrc: "/images/prof_fei_fei.png",
       },
       {
         university: "Carnegie Mellon University",
@@ -57,7 +57,7 @@ export const getMockData = async (path: string, options: RequestInit = {}): Prom
         field: "Robotics Institute",
         match: 88,
         recommendation: "Good Match",
-        imageSrc: "https://i.pravatar.cc/150?u=hebert",
+        imageSrc: "/images/prof_martial.png",
       },
     ];
   }
